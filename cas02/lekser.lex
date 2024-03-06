@@ -25,6 +25,8 @@
 
 %{
 
+// Leksicki analizator za gramatiku aritmetickih izraza koji podrzavaju operacije: +, -, *, /, ()
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -59,7 +61,7 @@ int main() {
             printf("%c", token);
         }
     }
-
+    
     printf("\n");
 
     return 0;
