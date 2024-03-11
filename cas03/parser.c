@@ -31,13 +31,13 @@ void C();
 
 void S() {
     if (token == 'a') {
-        printf("S -> aA\n");
+        printf("S -> a A\n");
         // kako prepoznajemo terminale? ucitavamo novi token sa ulaza
         // kako prepoznajemo neterminale? pozivamo odgovarajucu funkciju
         token = yylex();
         A();
     } else if (token == 'b') {
-        printf("S -> bB\n");
+        printf("S -> b B\n");
         token = yylex();
         B();
     } else {
@@ -47,7 +47,7 @@ void S() {
 
 void A() {
     if (token == 'a') {
-        printf("A -> aB\n");
+        printf("A -> a B\n");
         token = yylex();
         B();
     } else if (token == 'c') {
@@ -60,11 +60,11 @@ void A() {
 
 void B() {
     if (token == 'b') {
-        printf("B -> bA\n");
+        printf("B -> b A\n");
         token = yylex();
         A();
     } else if (token == 'c') {
-        printf("B -> cB\n");
+        printf("B -> c B\n");
         token = yylex();
         B();
     } else {
