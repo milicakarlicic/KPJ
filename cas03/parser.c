@@ -41,7 +41,7 @@ void S() {
         token = yylex();
         B();
     } else {
-        greska("Ocekivano a ili b na ulazu");
+        greska("[S] Ocekivano a ili b na ulazu");
     }
 }
 
@@ -54,7 +54,7 @@ void A() {
         printf("A -> C\n");
         C();
     } else {
-        greska("Ocekivano a ili c na ulazu");
+        greska("[A] Ocekivano a ili c na ulazu");
     }
 }
 
@@ -68,7 +68,7 @@ void B() {
         token = yylex();
         B();
     } else {
-        greska("Ocekivano c ili b na ulazu");
+        greska("[B] Ocekivano c ili b na ulazu");
     }
 }
 
@@ -77,14 +77,16 @@ void C() {
         printf("C -> c\n");
         token = yylex();
     } else {
-        greska("Ocekivano c  na ulazu");
+        greska("[C] Ocekivano c  na ulazu");
     }
 }
 
 int main() {
     token = yylex();
+    
     S();
-    if(token == 0) {
+    
+    if (token == 0) {
         printf("Recenica pripada gramatici\n");
     } else {
         printf("Recenica NE pripada gramatici\n");
