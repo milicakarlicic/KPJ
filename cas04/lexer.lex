@@ -17,9 +17,7 @@
 
 [()+*]                      { return *yytext; }
 
-[ \t]                       {}
-
-\n                          { return eoi; }
+[ \t\n]                     {}
 
 .                           {
     fprintf(stderr, "Leksicka greska: %s\n", yytext);
