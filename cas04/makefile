@@ -1,3 +1,11 @@
+# MAKE - alat koji se koristi za odrzavanje projekata
+
+# pisemo fajl sa nazivom makefile (ili Makefile)
+
+# pozivanje alata: 
+#	●  make 
+#	●  make clean (za pozivanje cilja clean)
+
 # promenljive za kompajler i opcije
 CC = gcc
 CFLAGS = -Wall -Wextra
@@ -6,9 +14,9 @@ CFLAGS = -Wall -Wextra
 #	na koji nacin dobijamo cilj_pravila na osnovu liste_zavisnosti
 
 # skracenice:
-# $^     svi iz liste zavisnosti
-# $<     prvi u listi zavisnosti
-# $@     cilj pravila
+# 	● $^  -   svi iz liste zavisnosti
+# 	● $<  -   prvi u listi zavisnosti
+# 	● $@  -   cilj pravila
 
 izvrsni: lex.yy.o parser.o
 	$(CC) $(CFLAGS) -o $@ $^
