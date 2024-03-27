@@ -38,7 +38,7 @@ int main() {
 void NIZ_NAREDBI() {
     if(preduvid == int_token || preduvid == print_token) {
 #ifdef YYDEBUG
-        printf("NIZ_NAREDBI => NAREDBA ; NIZ_NAREDBI'\n");
+        printf("NIZ_NAREDBI -> NAREDBA ; NIZ_NAREDBI'\n");
 #endif
         NAREDBA();
         if(preduvid != ';')
@@ -53,12 +53,12 @@ void NIZ_NAREDBI() {
 void NIZ_NAREDBI_P() {
     if(preduvid == int_token || preduvid == print_token) {
 #ifdef YYDEBUG
-        printf("NIZ_NAREDBI' => NIZ_NAREDBI\n");
+        printf("NIZ_NAREDBI' -> NIZ_NAREDBI\n");
 #endif
         NIZ_NAREDBI();
     } else if(preduvid == eoi) {
 #ifdef YYDEBUG
-        printf("NIZ_NAREDBI' => eps\n");
+        printf("NIZ_NAREDBI' -> eps\n");
 #endif
     } else {
         greska("[NIZ_NAREDBI'] Ocekivano eoi, int_token ili print_token na ulazu");
@@ -68,7 +68,7 @@ void NIZ_NAREDBI_P() {
 void NAREDBA() {
     if(preduvid == int_token) {
 #ifdef YYDEBUG
-        printf("NAREDBA => int_token id = E\n");
+        printf("NAREDBA -> int_token id = E\n");
 #endif
         preduvid = yylex();
         if(preduvid != id)
@@ -80,7 +80,7 @@ void NAREDBA() {
         E();
     } else if(preduvid == print_token) {
 #ifdef YYDEBUG
-        printf("NAREDBA => print_token ( E )\n");
+        printf("NAREDBA -> print_token ( E )\n");
 #endif
         preduvid = yylex();
         if(preduvid != '(')
@@ -98,7 +98,7 @@ void NAREDBA() {
 void E() {
     if(preduvid == '~' || preduvid == '(' || preduvid == broj || preduvid == id) {
 #ifdef YYDEBUG
-        printf("E => T E'\n");
+        printf("E -> T E'\n");
 #endif
         T();
         EP();
@@ -110,14 +110,14 @@ void E() {
 void EP() {
     if(preduvid == '|') {
 #ifdef YYDEBUG
-        printf("E' => | T E'\n");
+        printf("E' -> | T E'\n");
 #endif
         preduvid = yylex();
         T();
         EP();
     } else if(preduvid == ';' || preduvid == ')') {
 #ifdef YYDEBUG
-        printf("E' => eps\n");
+        printf("E' -> eps\n");
 #endif
     } else {
         greska("[E'] Ocekivano |, ; ili ) na ulazu");
@@ -127,7 +127,7 @@ void EP() {
 void T() {
     if(preduvid == '~' || preduvid == '(' || preduvid == broj || preduvid == id) {
 #ifdef YYDEBUG
-        printf("T => G T'\n");
+        printf("T -> G T'\n");
 #endif
         G();
         TP();
@@ -139,14 +139,14 @@ void T() {
 void TP() {
     if(preduvid == '&') {
 #ifdef YYDEBUG
-        printf("T' => & G T'\n");
+        printf("T' -> & G T'\n");
 #endif
         preduvid = yylex();
         G();
         TP();
     } else if(preduvid == ';' || preduvid == ')' || preduvid == '|') {
 #ifdef YYDEBUG
-        printf("T' => eps\n");
+        printf("T' -> eps\n");
 #endif
     } else {
         greska("[T'] Ocekivano &, |, ; ili ) na ulazu");
@@ -156,13 +156,13 @@ void TP() {
 void G() {
     if(preduvid == '~') {
 #ifdef YYDEBUG
-        printf("G => ~ G\n");
+        printf("G -> ~ G\n");
 #endif
         preduvid = yylex();
         G();
     } else if(preduvid == '(' || preduvid == broj || preduvid == id) {
 #ifdef YYDEBUG
-        printf("G => F\n");
+        printf("G -> F\n");
 #endif
         F();
     } else {
@@ -173,7 +173,7 @@ void G() {
 void F() {
     if(preduvid == '(') {
 #ifdef YYDEBUG
-        printf("F => ( E )\n");
+        printf("F -> ( E )\n");
 #endif
         preduvid = yylex();
         E();
@@ -182,12 +182,12 @@ void F() {
         preduvid = yylex();
     } else if(preduvid == broj) {
 #ifdef YYDEBUG
-        printf("F => broj\n");
+        printf("F -> broj\n");
 #endif
         preduvid = yylex();
     } else if(preduvid == id) {
 #ifdef YYDEBUG
-        printf("F => id\n");
+        printf("F -> id\n");
 #endif
         preduvid = yylex();
     } else {
