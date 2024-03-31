@@ -24,7 +24,7 @@ izvrsni: lex.yy.o parser.o
 lex.yy.o: lex.yy.c tokeni.h
 	$(CC) $(CFLAGS) -c $<
 
-lex.yy.c: lexer.lex
+lex.yy.c: lekser.lex
 	flex $<
 	
 parser.o: parser.c tokeni.h
