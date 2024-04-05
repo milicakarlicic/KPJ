@@ -9,3 +9,4 @@ Repozitorijum sadrži materijale sa časova vježbi iz predmeta Kompilacija prog
   - čas04: Sintaksna analiza naniže - rekurzivni spust. Skupovi izbora. _Makefile_. _Online_ [alat](https://www.cs.princeton.edu/courses/archive/spring20/cos320/LL1/) za LL(1) gramatike.
   - čas05: Rekurzivni spust - vježbanje.
   - čas06: Sintaksna analiza naniže - potisni automat.
+  - čas07: Sintaksna analiza naniže - interpreter (aritmetički izrazi). Sintaksna analiza naviše - uvod.
