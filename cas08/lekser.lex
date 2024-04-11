@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "y.tab.h"
 
 %}
@@ -20,7 +19,7 @@
 
 [()+*]			{ return *yytext; }
 
-[ \t\n]			{}
+[ \t]			{}
 
 .				{
 	fprintf(stderr, "Leksicka greska: %c\n", *yytext);
