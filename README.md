@@ -10,4 +10,4 @@ Repozitorijum sadrži materijale sa časova vježbi iz predmeta Kompilacija prog
   - čas05: Rekurzivni spust - vježbanje.
   - čas06: Sintaksna analiza naniže - potisni automat.
   - čas07: Sintaksna analiza naniže - interpreter (aritmetički izrazi). Sintaksna analiza naviše - uvod.
-  - čas08: Sintaksna analiza naniže - alat _yacc_.
+  - čas08: Sintaksna analiza naviše - alat _yacc_.
