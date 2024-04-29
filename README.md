@@ -12,3 +12,5 @@ Repozitorijum sadrži materijale sa časova vježbi iz predmeta Kompilacija prog
   - čas07: Sintaksna analiza naniže - interpreter (aritmetički izrazi). Sintaksna analiza naviše - uvod.
   - čas08: Sintaksna analiza naviše - alat _yacc_.
   - čas09: C++
+  - čas10: C++ nastavak. Sintaksna analiza naviše - alat _bison_.
+ 
