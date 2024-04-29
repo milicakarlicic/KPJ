@@ -1,0 +1,104 @@
+
+%{
+
+// kalkulator - druga verzija
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <map>
+
+#define YYDEBUG 1
+
+using namespace std;
+
+extern int yylex();
+
+void yyerror(const string &poruka) {
+	cerr << poruka << endl;
+	exit(EXIT_FAILURE);
+}
+
+map<string, double> mapa;
+
+%}
+
+// promjena tipa atributa yylval u tip unija (podrazumijevano int)
+%union {
+	double d;
+	string* s;
+}
+
+// tip atributa tokena broj je tip promenljive d iz unije
+%token <d> broj
+// tip atributa tokena id je tip promenljive s iz unije
+%token <s> id
+
+// tip atributa neterminala E je tip promenljive d iz unije
+%type <d> E
+
+%left '+' '-'
+%left '*' '/'
+// %nonassoc - token koji nije asocijativan
+%right UMINUS
+
+%%
+
+NIZ_NAREDBI: NIZ_NAREDBI NAREDBA '\n'
+| NAREDBA '\n'
+;
+
+NAREDBA: E {
+	cout << $1 << endl;
+}
+| id '=' E {
+	mapa[*$1] = $3;
+	delete $1;
+}
+// epsilon pravilo
+|
+;
+
+E: E '+' E {
+	$$ = $1 + $3;
+}
+| E '-' E {
+	$$ = $1 - $3;
+}
+| E '*' E {
+	$$ = $1 * $3;
+}
+| E '/' E {
+	$$ = $1 / $3;
+}
+// direktivom %prec zadajemo da unarni minus ima isti prioritet i asocijativnost kao token UMINUS
+| '-' E %prec UMINUS {
+	$$ = -$2;
+}
+| '(' E ')' {
+	$$ = $2;
+}
+| broj {
+	$$ = $1;
+}
+| id {
+	auto it = mapa.find(*$1);
+
+	if(it == mapa.end()) {
+		string poruka = "Promenljiva " + *$1 + " nije definisana...";
+		yyerror(poruka);
+	}
+
+	$$ = it->second;
+	delete $1;
+}
+;
+
+%%
+
+int main() {
+	// yydebug = 1;
+	yyparse();
+
+	return 0;
+}
