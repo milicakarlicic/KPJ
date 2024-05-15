@@ -45,7 +45,7 @@ NIZ_NAREDBI: NIZ_NAREDBI NAREDBA '\n'
 ;
 
 NAREDBA: E {
-    $1->Ispisi();
+    cout << *$1;
     delete $1;
 }
 | id op_dodele E {

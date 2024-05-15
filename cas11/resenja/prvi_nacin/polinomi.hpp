@@ -1,8 +1,9 @@
 #ifndef POLINOMI_HPP
 #define POLINOMI_HPP
 
+// U zaglavlju pisemo potpise metode i implementacije nekih veoma jednostavnih metoda
+
 #include <iostream>
-#include <cstdlib>
 #include <vector>
 
 using namespace std;
