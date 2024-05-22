@@ -13,5 +13,5 @@ Repozitorijum sadrži materijale sa časova vježbi iz predmeta Kompilacija prog
   - čas08: Sintaksna analiza naviše - alat _yacc_.
   - čas09: C++
   - čas10: C++ nastavak. Sintaksna analiza naviše - alat _bison_.
-  - čas11: Rok sa polinomima - a), b), c).
+  - čas11: Rok sa polinomima.
  
