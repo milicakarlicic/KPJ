@@ -1,4 +1,0 @@
-pocetak
-    ispisi("Vrednost izraza je: ");
-    ispisi(3 + 0xA mod 5)
-kraj.

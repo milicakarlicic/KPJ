@@ -3,16 +3,16 @@
 %option nounput
 
 /*
-    ● flex - program za generisanje leksičkog analizatora (info flex dokumentacija)
-    ● pišemo skriptove sa ekstenzijom .lex
+    ● flex - program za generisanje leksickog analizatora (info flex dokumentacija)
+    ● pisemo skripte sa ekstenzijom .lex
     ● pozivanje i pokretanje programa:
-        ○ flex naziv_fajla.lex (flex izgeneriše fajl lex.yy.c)
+        ○ flex naziv_fajla.lex (flex izgenerise fajl lex.yy.c)
         ○ gcc lex.yy.c -Wall -Wextra
         ○ ./a.out
-    ● program koji pišemo se sastoji iz tri dijela razvdojena %%:
-        ○ sekcija za definicije (sadrži podsekciju %{....%} u okviru koje pišemo C-kod koji se umece pri pocetku fajla lex.yy.c)
+    ● program koji pisemo se sastoji iz tri dijela razvdojena %%:
+        ○ sekcija za definicije (sadrzi podsekciju %{....%} u okviru koje pisemo C-kod koji se umece pri pocetku fajla lex.yy.c)
         ○ sekcija za pravila (regularni izrazi kojima pridruzujemo odgovarajuce akcije)
-        ○ sekcija za korisnički kod (umece se na kraj fajla lex.yy.c)
+        ○ sekcija za korisnicki kod (umece se na kraj fajla lex.yy.c)
     ● bitna svojstva flex-a:
         ○ pravila cita redom
         ○ ulazi u akciju regularnog izraza koji je najvise karaktera poklopio (ako ima vise takvih ulazi se u akciju koja odgovara prvom od njih)
@@ -24,8 +24,6 @@
 */
 
 %{
-
-// Leksicki analizator za gramatiku aritmetickih izraza koji podrzavaju operacije: +, -, *, /, ()
 
 #include <stdio.h>
 #include <stdlib.h>

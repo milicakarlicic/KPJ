@@ -1,6 +1,0 @@
-int x_1 = 5;
-int x_2 = 0x6;
-print(x_1 | 1);
-int x_4 = x_1 & x_3;
-int x_5 = ~~x_1;
-print(x_5);

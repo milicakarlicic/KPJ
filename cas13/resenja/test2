@@ -1,5 +1,0 @@
-pocetak
-    i := 3 * (4 + 2);
-    ispisi(i)
-
-kraj.

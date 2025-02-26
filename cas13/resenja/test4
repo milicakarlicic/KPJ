@@ -1,8 +1,0 @@
-pocetak
-    i := 1;
-    dok_je i < 10 radi_sledece:
-        pocetak
-            ispisi(i);
-            i := i + 1
-        kraj
-kraj.
