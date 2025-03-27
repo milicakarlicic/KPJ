@@ -1,0 +1,8 @@
+sifra x;
+sifra wifi(1.23, 1230);
+sifra wifi1(1, 130);
+sifra wifi2(3, 30);
+sifra mejl1 = wifi1+wifi2;
+sifra mejl2 = wifi1+wifi2-wifi;
+stampaj x;
+stampaj mejl1+mejl2;
