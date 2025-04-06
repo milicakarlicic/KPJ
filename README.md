@@ -8,6 +8,7 @@ Repozitorijum sadrži materijale sa časova vježbi iz predmeta Kompilacija prog
   - čas03: Sintaksna analiza naniže - rekurzivni spust. Skupovi izbora. _Makefile_. _Online_ [alat](https://www.cs.princeton.edu/courses/archive/spring20/cos320/LL1/) za LL(1) gramatike.
   - čas04: Rekurzivni spust nastavak. Sintaksna analiza naniže - potisni automat.
   - čas05: Potisni automat nastavak. Sintaksna analiza naniže - interpreter (aritmetički izrazi).
+  - čas06: Sintaksna analiza naviše - uvod.
   <!-- čas03: Transformacije gramatika. _Online_ [alat](https://lab.brainonfire.net/CFG/remove-left-recursion.html) za eliminisanje lijeve rekurzije u gramatici.
   - čas04: Sintaksna analiza naniže - rekurzivni spust. Skupovi izbora. _Makefile_. _Online_ [alat](https://www.cs.princeton.edu/courses/archive/spring20/cos320/LL1/) za LL(1) gramatike.
   - čas05: Rekurzivni spust - vježbanje.
