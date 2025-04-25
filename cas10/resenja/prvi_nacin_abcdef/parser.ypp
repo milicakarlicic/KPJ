@@ -1,0 +1,145 @@
+%{
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+#include <map>
+#include "polinomi.hpp"
+
+#define YYDEBUG 1
+
+using namespace std;
+
+extern int yylex();
+
+void yyerror(const string& poruka) {
+	cerr << poruka << endl;
+	exit(EXIT_FAILURE);
+}
+
+map<string, Polinom> mapa;
+
+%}
+
+%union {
+	double d;
+	vector<double>* v;
+	Polinom* p;
+	string* s;
+}
+
+%token <d> broj
+%token <s> id
+%token dodjela jednako razlicito
+
+%type <v> NizBrojeva
+%type <p> E
+
+%left '+' '-'
+%left '*'
+%right UMINUS
+%left '\''
+
+%%
+
+NizNaredbi: NizNaredbi Naredba '\n'
+| Naredba '\n'
+;
+
+Naredba: E {
+	$1->Ispisi();
+	delete $1;
+}
+| id dodjela E {
+	mapa[*$1] = *$3;
+	delete $1;
+	delete $3;
+}
+| E jednako E {
+	if(*$1 == *$3)
+		cout << "True" << endl;
+	else
+		cout << "False" << endl;
+
+	delete $1;
+	delete $3;
+}
+| E razlicito E {
+	if(*$1 != *$3)
+		cout << "True" << endl;
+	else
+		cout << "False" << endl;
+
+	delete $1;
+	delete $3;
+}
+| E '[' broj ']' {
+	cout << (*$1)[$3] << endl;
+	delete $1;
+}
+|
+;
+
+E: E '+' E {
+	$$ = new Polinom(*$1 + *$3);
+	delete $1;
+	delete $3;
+}
+| E '-' E {
+	$$ = new Polinom(*$1 - *$3);
+	delete $1;
+	delete $3;
+}
+| E '*' E {
+	$$ = new Polinom(*$1 * (*$3));
+	delete $1;
+	delete $3;
+}
+| '-' E %prec UMINUS {
+	$$ = new Polinom(-(*$2));
+	delete $2;
+}
+| '(' E ')' {
+	$$ = $2;
+	// ne smijemo da brisemo jer smo samo preusmjerili pokazivac!
+}
+| E '\'' {
+	$$ = new Polinom($1->Izvod());
+	delete $1;
+}
+| '$' E '|' broj {
+	$$ = new Polinom($2->Integral($4));
+	delete $2;
+}
+| id {
+	auto it = mapa.find(*$1);
+	if(it == mapa.end()) {
+		string poruka = "Promenljiva " + *$1 + " nije definisana";
+		yyerror(poruka);
+	}
+
+	$$ = new Polinom(it->second);
+	delete $1;
+}
+| '<' NizBrojeva '>' {
+	$$ = new Polinom(*$2, $2->size() - 1);
+	delete $2;
+}
+;
+
+NizBrojeva: NizBrojeva ',' broj {
+	$$->push_back($3);
+}
+| broj {
+	$$ = new vector<double>();
+	$$->push_back($1);
+}
+;
+
+%%
+int main() {
+	// yydebug = 1;
+	yyparse();
+	
+	return 0;
+}
