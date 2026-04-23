@@ -1,8 +1,17 @@
 #include <iostream>
 
-/*
+extern int yylex();
 
-  Implementacija sintaksnog analizatora za gramatiku:
+void greska(std::string poruka) {
+    std::cerr << "Sintaksna greska: " << poruka << std::endl;
+    exit(EXIT_FAILURE);
+}
+
+int token;
+
+/*
+---------------------------------------------
+Implementacija sintaksnog analizatora za gramatiku:
   
             skupovi izbora:
 
@@ -13,17 +22,8 @@
   B ->  bA      {b}
       | cB      {c}
   C ->  c       {c}
-
+---------------------------------------------
 */
-
-extern int yylex();
-
-void greska(std::string poruka) {
-    std::cerr << "Sintaksna greska: " << poruka << std::endl;
-    exit(EXIT_FAILURE);
-}
-
-int token;
 
 void S();
 void A();
@@ -52,7 +52,7 @@ void S() {
         token = yylex();
         B();
     } else {
-        greska("[S]: Ocekivani tokeni a ili b");
+        greska("[S] Ocekivani tokeni a ili b");
     }
 }
 
