@@ -11,6 +11,37 @@ void greska(std::string poruka) {
     exit(EXIT_FAILURE);
 }
 
+/*
+----------------------------------------------------------------------
+    NIZ_NAREDBI ->  NIZ_NAREDBI NAREDBA ;
+                 | NAREDBA ;
+    NAREDBA ->  sifra id
+              | sifra id(broj, broj)
+              | sifra id = E
+              | stampaj E
+    E ->  E + T
+        | E - T
+        | T
+    T -> broj
+        | id
+----------------------------------------------------------------------
+    NIZ_NAREDBI ->  NAREDBA ; NIZ_NAREDBI'    {sifra, stampaj}
+    NIZ_NAREDBI' ->  NAREDBA ; NIZ_NAREDBI'   {sifra, stampaj}
+                  | eps                       {eoi}
+    NAREDBA ->  sifra id NAREDBA'             {sifra}
+            | stampaj E                       {stampaj}
+    NAREDBA' ->  eps                          {;}
+                | (broj, broj)                {(}
+                | = E                         {=}
+    E ->  TE'                                 {broj, id}
+    E' ->  +TE'                               {+}
+         | -TE'                               {-}
+         | eps                                {;}
+    T -> broj                                 {broj}
+         | id                                 {id}
+----------------------------------------------------------------------
+*/
+
 int main() {
     int preduvid;
     std::stack<int> stek;
@@ -44,7 +75,7 @@ int main() {
                     stek.push(NAREDBA);
                 } else if (preduvid == eoi) {
 #ifdef YYDEBUG
-                    std::cout << "NIZ_NAREDBI' -> Eps\n";
+                    std::cout << "NIZ_NAREDBI' -> eps\n";
 #endif
                 } else {
                     greska("[NIZ_NAREDBIP] Ocekivani tokeni sifra ili stampaj ili eoi");
@@ -71,7 +102,7 @@ int main() {
             case NAREDBAP: 
                 if (preduvid == ';') {
 #ifdef YYDEBUG
-                    std::cout << "NAREDBA' -> Eps\n";
+                    std::cout << "NAREDBA' -> eps\n";
 #endif
                 } else if (preduvid == '(') {
 #ifdef YYDEBUG                    
@@ -120,7 +151,7 @@ int main() {
                     stek.push('-');
                 } else if (preduvid == ';') {
 #ifdef YYDEBUG                    
-                    std::cout << "E' -> Eps\n";
+                    std::cout << "E' -> eps\n";
 #endif
                 } else {
                     greska("[E'] Ocekivani tokeni +, - ili ;");
@@ -153,7 +184,7 @@ int main() {
     if (preduvid == eoi) {
         std::cout << "Recenica pripada gramatici\n";
     } else {
-        std::cout << "Recenica ne pripada gramatici\n";
+        std::cout << "Recenica NE pripada gramatici\n";
     }
 
     return 0;
