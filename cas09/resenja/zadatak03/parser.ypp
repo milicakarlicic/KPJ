@@ -1,0 +1,53 @@
+%{
+    #include <iostream>
+
+    #define YYDEBUG     1
+
+    extern int yylex();
+
+    void yyerror(const std::string& poruka) {
+        std::cerr << "Sintaksna greska: " << poruka << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+%}
+
+%token broj
+
+%left '+' '-'
+%left '*' '/'
+%right UMINUS
+// %nonassoc - token koji nije asocijativan
+
+%%
+
+NIZ_NAREDBI: NIZ_NAREDBI '\n' NAREDBA
+    | NAREDBA
+    ;
+
+NAREDBA: E
+    // epsilon pravilo:
+    |
+    ;
+
+E:    E '+' E
+    | E '-' E
+    | E '*' E
+    | E '/' E
+    // direktivom %prec zadajemo da unarni minus ima isti prioritet i asocijativnost kao token UMINUS
+    | '-' E %prec UMINUS
+    | '(' E ')'
+    | broj
+    ;
+
+%%
+
+int main() {
+    //yydebug = 1;
+
+    if (yyparse() == 0) {
+        std::cout << "Sve ok!\n";
+    } 
+
+    return 0;
+}

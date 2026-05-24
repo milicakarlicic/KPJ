@@ -88,6 +88,9 @@ std::ostream& operator<<(std::ostream& izlaz, const Student& s) {
     return izlaz;
 }
 
+// za proveru curenja memorije: valgrind ./a.out
+// ukljuciti opciju -g prilikom kompilacije da bi se dobile linije koda u izvestaju valgrinda
+
 int main() {
     // memoriju alociramo dinamicki da bismo mogli da koristimo polimorfizam,
     // tj. da niz pokazivaca na baznu klasu moze da sadrzi objekte izvedenih klasa
