@@ -11,6 +11,7 @@ Repozitorijum sadrži materijale sa časova vježbi iz predmeta Kompilacija prog
   - čas06: Potisni automat nastavak.
   - čas07: C++.
   - čas08: C++ nastavak.
+  - čas09: Sintaksna analiza naviše - alat _bison_.
   <!-- - čas03: Sintaksna analiza naniže - rekurzivni spust. Skupovi izbora. _Makefile_. _Online_ [alat](https://www.cs.princeton.edu/courses/archive/spring20/cos320/LL1/) za LL(1) gramatike.
   - čas04: Rekurzivni spust nastavak. Sintaksna analiza naniže - potisni automat.
   - čas05: Potisni automat nastavak. Sintaksna analiza naniže - interpreter (aritmetički izrazi).
