@@ -13,11 +13,9 @@ lex.yy.c: lekser.l parser.tab.hpp
 parser.tab.o: parser.tab.cpp parser.tab.hpp
 	$(CXX) $(CXXFLAGS) -c $<
 
-# -d generise parser.tab.hpp
-# -v generise parser.output
 parser.tab.cpp parser.tab.hpp: parser.ypp
 	bison -d -v $<
 
 .PHONY: clean
-clean: 
-	rm -f *.o izvrsni lex.yy* parser.tab* parser.output
+clean:
+	rm -f *.o lex.yy* parser.tab* izvrsni parser.output
