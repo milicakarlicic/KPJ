@@ -13,8 +13,8 @@ Repozitorijum sadrži materijale sa časova vježbi iz predmeta Kompilacija prog
   - čas08: C++ nastavak.
   - čas09: C++ nastavak. Sintaksna analiza naviše - alat _bison_.
   - čas10: Sintaksna analiza naviše - alat _bison_ nastavak.
-  <!-- - čas11: Rok sa polinomima.
-  - čas12: Rok sa funkcijama.
+  - čas11: Rok sa polinomima - a), b) i c).
+<!--   - čas12: Rok sa funkcijama.
   - čas13: Rok sa pseudo Paskalom.
     -->
  
