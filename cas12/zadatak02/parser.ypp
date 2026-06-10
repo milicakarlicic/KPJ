@@ -1,0 +1,51 @@
+%{
+    #include <iostream>
+    #include "funkcije.hpp"
+
+    extern int yylex();
+
+    void yyerror(const std::string& poruka) {
+        std::cerr << poruka << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+%}
+
+%token id_f id_p
+%token sin_token cos_token function_token
+%token broj
+
+%left '+'
+%left '*'
+
+%%
+
+NIZ_NAREDBI: NIZ_NAREDBI '\n' NAREDBA
+    | NAREDBA
+    ;
+
+NAREDBA: function_token id_f '(' NIZ_ARG ')' '=' '"' E '"'
+    |
+    ;
+
+NIZ_ARG: NIZ_ARG ',' id_p
+    | id_p
+    ;
+
+E: E '+' E
+    | E '*' E
+    | sin_token '(' E ')'
+    | cos_token '(' E ')'
+    | id_p
+    | broj
+    ;
+
+%%
+
+int main() {
+    if (yyparse() == 0) {
+        std::cout << "Sve ok!\n";
+    }
+
+    return 0;
+}

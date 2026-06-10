@@ -1,0 +1,6 @@
+function F(x) = "1+x*x"
+function G(x,y) = "sin(cos(x))+y+3.14"
+
+function H(x,y,z) = "2*x+3*y+4*z"
+function J(x,y) = "x+y+z"
+
