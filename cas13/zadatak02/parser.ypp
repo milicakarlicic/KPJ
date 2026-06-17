@@ -1,0 +1,139 @@
+%{
+    #include <iostream>
+    #include "naredbe.hpp"
+
+    #define YYDEBUG     1
+
+    extern int yylex();
+
+    void yyerror(const std::string& poruka) {
+        std::cerr << poruka << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    std::map<std::string, int> promenljive; 
+%}
+
+%union {
+    int broj;
+    std::string* s;
+    Izraz* i;
+    Naredba* n;
+    std::vector<Naredba*>* v;
+}
+
+%token pocetak kraj ispisi dodela unesi ako_je onda inace dok_je radi_sledece 
+%token<s> id string_token
+%token<broj> broj
+
+%type<i> E USLOV
+%type<n> BLOK NAREDBA 
+%type<v> NIZ_NAREDBI
+
+%nonassoc BEZ_INACE
+%nonassoc inace
+
+%left '<' '>'
+%left '+'
+%left '*' mod_token
+
+%%
+
+PROGRAM: BLOK '.' {
+        $1->izvrsi();
+        delete $1;
+    }
+    ;
+
+BLOK: pocetak NIZ_NAREDBI kraj {
+        $$ = new Blok(*$2);
+        delete $2;
+    }
+    | NAREDBA {
+        $$ = new Blok($1);
+    }
+    ;
+
+NIZ_NAREDBI: NIZ_NAREDBI ';' NAREDBA {
+        $$ = $1;
+        $$->push_back($3);
+    }
+    | NAREDBA {
+        $$ = new std::vector<Naredba*>();
+        $$->push_back($1);
+    }
+    ;
+
+NAREDBA: ispisi '(' string_token ')' {
+        $$ = new IspisNiske(*$3);
+        delete $3;
+    }
+    | ispisi '(' E ')' {
+        $$ = new IspisIzraza($3);
+    }
+    | id dodela E {
+        $$ = new Dodela(*$1, $3);
+        delete $1;
+    }
+    | unesi '(' id ')' {
+        $$ = new Unesi(*$3);
+        delete $3;
+    }
+    | ako_je USLOV onda ':' BLOK inace ':' BLOK {
+        $$ = new UslovSaInace($2, $5, $8);
+    }
+    | ako_je USLOV onda ':' BLOK %prec BEZ_INACE {
+        $$ = new UslovBezInace($2, $5);
+    }
+    | dok_je USLOV radi_sledece ':' BLOK {
+        $$ = new Petlja($2, $5);
+    }
+    ;
+
+USLOV: E '<' E {
+        $$ = new Manje($1, $3);
+    }
+    | E '>' E {
+        $$ = new Vece($1, $3);
+    }
+    ;
+
+E: E '+' E {
+        $$ = new Sabiranje($1, $3);
+    }
+    | E '*' E {
+        $$ = new Mnozenje($1, $3);
+    }
+    | E mod_token E {
+        $$ = new DeljenjeOstatak($1, $3);
+    }
+    | '(' E ')' {
+        $$ = $2;
+    }
+    | id {
+        $$ = new Promenljiva(*$1);
+        delete $1;
+    }
+    | broj {
+        $$ = new Konstanta($1);
+    }
+    ;
+
+%%
+
+extern FILE* yyin;
+
+int main(int argc, char** argv) {
+    // yydebug = 1;
+
+    // Ne vrsimo preusmeravanje standardnog ulaza zbog naredbe za unos broja
+    if (argc != 2 || (yyin = fopen(argv[1], "r")) == NULL) {
+        yyin = stdin;
+    }
+
+    if (yyparse() == 0) {
+        std::cout << "Sve ok!\n";
+    }
+
+    return 0;
+}

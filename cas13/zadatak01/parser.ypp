@@ -1,0 +1,142 @@
+%{
+    #include <iostream>
+    #include <map>
+    #include "funkcije.hpp"
+
+    extern int yylex();
+
+    void yyerror(const std::string& poruka) {
+        std::cerr << poruka << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    std::map<char, Funkcija*> funkcije;
+%}
+
+%union {
+    double d;
+    char c;
+    Izraz* i;
+    std::vector<char>* niz_arg;
+    std::vector<double>* niz_br;
+}
+
+%type<i> E
+%type<niz_arg> NIZ_ARG
+%type<niz_br> NIZ_BROJEVA
+
+%token<d> broj
+%token<c> id_f id_p
+%token sin_token cos_token function_token
+
+%left '+'
+%left '*'
+
+%%
+
+NIZ_NAREDBI: NIZ_NAREDBI '\n' NAREDBA
+    | NAREDBA
+    ;
+
+NAREDBA: function_token id_f '(' NIZ_ARG ')' '=' '"' E '"' {
+        auto it = funkcije.find($2);
+        if (it != funkcije.end()) {
+            delete it->second;
+        }
+
+        Funkcija* f = new Funkcija(*$4, $8);
+        if (!f->provera(*$4)) {
+            delete f;
+            yyerror("Funkcija pogresno zadata");
+        }
+
+        funkcije[$2] = f;
+
+        delete $4;
+    }
+    | id_f {
+        auto it = funkcije.find($1);
+        if (it == funkcije.end()) {
+            yyerror("Funkcija nije definisana");
+        }
+
+        (it->second)->ispisi();
+    }
+    | id_f '[' NIZ_BROJEVA ']' {
+        auto it = funkcije.find($1);
+        if (it == funkcije.end()) {
+            yyerror("Funkcija nije definisana");
+        }
+
+        std::cout << (*(it->second))[*$3] << std::endl;
+        delete $3;
+    }
+    | id_f '\'' id_p {
+        auto it = funkcije.find($1);
+        if (it == funkcije.end()) {
+            yyerror("Funkcija nije definisana");
+        }
+
+        Funkcija* izvod = (it->second)->izvod($3);
+        izvod->ispisi();
+        delete izvod;
+    }
+    |
+    ;
+
+NIZ_BROJEVA: NIZ_BROJEVA ',' broj {
+        $$ = $1;
+        $$->push_back($3);
+    }
+    | broj {
+        $$ = new std::vector<double>();
+        $$->push_back($1);
+    }
+    ;
+
+NIZ_ARG: NIZ_ARG ',' id_p {
+        $$ = $1;
+        $$->push_back($3);
+    }
+    | id_p {
+        $$ = new std::vector<char>();
+        $$->push_back($1);
+    }
+    ;
+
+E: E '+' E {
+        $$ = new Sabiranje($1, $3);
+    }
+    | E '*' E {
+        $$ = new Mnozenje($1, $3);
+    }
+    | sin_token '(' E ')' {
+        $$ = new Sinus($3);
+    }
+    | '(' E ')' {
+        $$ = $2;
+    }
+    | cos_token '(' E ')' {
+        $$ = new Kosinus($3);
+    }
+    | id_p {
+        $$ = new Promenljiva($1);
+    }
+    | broj {
+        $$ = new Konstanta($1);
+    }
+    ;
+
+%%
+
+int main() {
+    if (yyparse() == 0) {
+        std::cout << "Sve ok!\n";
+    }
+
+    for (auto& par : funkcije) {
+        delete par.second;
+    }
+
+    return 0;
+}
